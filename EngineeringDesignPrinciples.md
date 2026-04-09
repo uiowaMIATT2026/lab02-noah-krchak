@@ -16,3 +16,9 @@
     - EngineeringDesignPrinciples.md
     - ExperimentalResults.md
     - README.md
+
+# Assumptions on creating 2D images that have one circle in them
+- Spacing is 1.0 mm x 1.0 mm
+- Origin is 0.0 mm x 0.0 mm
+- Image files are in DICOM format
+  - Dicom format saves origin, spacing, and direction cosine of the image
