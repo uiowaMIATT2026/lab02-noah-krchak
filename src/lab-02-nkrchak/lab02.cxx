@@ -40,7 +40,18 @@ int main( int argc, char *argv[] )
     PARSE_ARGS;
 
     try{
+        //Read in both the fixed image and the moving image
+        typename FixedImageReaderType::Pointer fixedReader = FixedImageReaderType::New();
+        typename MovingImageReaderType::Pointer movingReader = MovingImageReaderType::New();
 
+        fixedReader->SetFileName(fixedImageFile);
+        movingReader->SetFileName(movingImageFile);
+
+        fixedReader->Update();
+        movingReader->Update();
+
+        FixedImageType::Pointer fixedImage = fixedReader->GetOutput();
+        MovingImageType::Pointer movingImage = movingReader->GetOutput();
     }
     catch(itk::ExceptionObject &err)
     {
