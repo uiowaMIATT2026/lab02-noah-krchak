@@ -14,10 +14,17 @@
 #include "itkRescaleIntensityImageFilter.h"
 
 const int numDim = 2;
+const float optimizerLearningRate = 4;
+const float optimizerMinimumStepLength = 0.001;
+const float optimizerRelaxFactor = 0.5;
+const float movingTranslationScale = 1.0 / 1000.0;
+const int optimizerNumIterations = 200;
+
 using InputPixelType = float;
 using AffineTransformPixelType = double;
 using OptimizerValueType = double;
 using InterpolatorCoordinateValueType = double;
+using CompositeTransformPixelType = double;
 using OutputPixelType = unsigned char;
 
 using FixedImageType = itk::Image<InputPixelType, numDim>;
@@ -37,6 +44,7 @@ using RegistrationType = itk::ImageRegistrationMethodv4<FixedImageType, MovingIm
 using FixedInterpolatorType = itk::LinearInterpolateImageFunction<FixedImageType, InterpolatorCoordinateValueType>;
 using MovingInterpolatorType = itk::LinearInterpolateImageFunction<MovingImageType, InterpolatorCoordinateValueType>;
 
+using CompositeTransformType = itk::CompositeTransform<CompositeTransformPixelType, numDim>;
 using ResampleFilterType = itk::ResampleImageFilter<MovingImageType, FixedImageType>;
 using DifferenceFilterType = itk::SubtractImageFilter<FixedImageType, FixedImageType, FixedImageType>;
 using RescaleIntensityFilterType = itk::RescaleIntensityImageFilter<FixedImageType, OutputImageType>;
@@ -75,6 +83,26 @@ int main( int argc, char *argv[] )
         registration->SetFixedImage(fixedImage);
         registration->SetMovingImage(movingImage);
 
+        optimizer->SetLearningRate(optimizerLearningRate);
+        optimizer->SetMinimumStepLength(optimizerMinimumStepLength);
+        optimizer->SetRelaxationFactor(optimizerRelaxFactor);
+
+        optimizer->SetNumberOfIterations(optimizerNumIterations);
+
+        auto transform = AffineTransformType::New();
+        OptimizerType::ScalesType optimizerScales(transform->GetNumberOfParameters());
+
+        optimizerScales.Fill(1.0);
+
+        for(int i = 9; i< 12; i++)
+            optimizerScales[i] = movingTranslationScale;
+
+        optimizer->SetScales(optimizerScales);
+
+        registration->Update();
+
+        auto outputCompositeTransform = CompositeTransformType::New();
+
         auto resampler = ResampleFilterType::New();
         resampler->SetInput(movingImage);
 
@@ -84,6 +112,7 @@ int main( int argc, char *argv[] )
         resampler->SetOutputOrigin(fixedImage->GetOrigin());
         resampler->SetOutputSpacing(fixedImage->GetSpacing());
         resampler->SetOutputDirection(fixedImage->GetDirection());
+        resampler->SetTransform(registration->GetModifiableTransform());
         resampler->SetDefaultPixelValue(100);
 
         auto difference = DifferenceFilterType::New();
