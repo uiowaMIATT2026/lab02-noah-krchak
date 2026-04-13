@@ -32,3 +32,13 @@
   - Center: 200 mm, 200 mm
   - Diameter: 60 mm
 - Image files must be saved in png format, as to adhere to the requirements stated in the README, specifically the file extensions of img1 and img2 are both .png
+
+# Register Circles Algorithm Assumptions
+- Since we are creating the images with a circle as stated above, we can safely assume that the spacing and origin matches the assumptions made in creating the 2d images
+- As stated above the algorithm will use the SEM to design the parameters needed
+- For registration we need the following functions: Transform, Optimizer, Metric and Registration
+- Assumptions on the registration algorithm are stated below
+  - Using affine transform: For the transform since the images are of the same "shape" but could be a different size, we need to use an Affine transformation to ensure we can rotate, translate and scale the image to register it
+  - Using Regular Step Gradient Descent optimizer: For simplicity. It was used in Hello World registration in ITK Book 2
+  - Using Mean squares image to image metric: Again for simplicity. It provides the mean squared error on a pixel-level based on intensity
+  - 
