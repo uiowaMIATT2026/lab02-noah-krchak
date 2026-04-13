@@ -47,3 +47,9 @@
 - Optimizer Scale assumptions
   - For translation, start with the assumption that translation is equivalent to 1/1000 of 1 radian in rotation or scaling
   - Keep all other scales at 1.0
+- Output
+  - The algorithm will output:
+    - An image containing the difference image between the fixed and moving images after registration has been completed
+    - This image will be in PNG format using unsigned char
+    - Default pixel value will be 100 so it is easily recognizable what pixels did match vs what didn't match
+    - Image Size, Origin, spacing, and direction will match the fixed image
