@@ -59,6 +59,22 @@ int main( int argc, char *argv[] )
         FixedImageType::Pointer fixedImage = fixedReader->GetOutput();
         MovingImageType::Pointer movingImage = movingReader->GetOutput();
 
+        auto metric = MetricType::New();
+        auto optimizer = OptimizerType::New();
+        auto registration = RegistrationType::New();
+
+        registration->SetMetric(metric);
+        registration->SetOptimizer(optimizer);
+
+        auto fixedInterpolator = FixedInterpolatorType::New();
+        auto movingInterpolator = MovingInterpolatorType::New();
+
+        metric->SetFixedInterpolator(fixedInterpolator);
+        metric->SetMovingInterpolator(movingInterpolator);
+
+        registration->SetFixedImage(fixedImage);
+        registration->SetMovingImage(movingImage);
+
         auto resampler = ResampleFilterType::New();
         resampler->SetInput(movingImage);
 
