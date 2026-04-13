@@ -52,4 +52,4 @@
     - An image containing the difference image between the fixed and moving images after registration has been completed
     - This image will be in PNG format using unsigned char
     - Default pixel value will be 100 so it is easily recognizable what pixels did match vs what didn't match
-    - Image Size, Origin, spacing, and direction will match the fixed image
+    - Dimension, Image Size, Origin, spacing, and direction will match the fixed image
