@@ -9,7 +9,7 @@
     <version>1.0.0</version>
 
     <parameters advanced="false">
-        <label>Input Images</label>
+        <label>Input / Output Images</label>
         <image>
             <name>fixedImageFile</name>
             <longflag>fixedImageFile</longflag>
