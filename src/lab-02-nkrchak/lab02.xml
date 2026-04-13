@@ -35,4 +35,68 @@
             <channel>output</channel>
         </image>
     </parameters>
+
+    <parameters advanced="false">
+        <label>Developer Parameters</label>
+        <float>
+            <name>optimizerLearningRate</name>
+            <longflag>optimizerLearningRate</longflag>
+            <label>Optimizer Learning Rate</label>
+            <description>Learning rate for registration optimizer</description>
+            <default>4</default>
+            <constraints>
+                <step>0.1</step>
+                <minimum>1</minimum>
+                <maximum>30</maximum>
+            </constraints>
+        </float>
+        <float>
+            <name>optimizerMinimumStepLength</name>
+            <longflag>optimizerMinimumStepLength</longflag>
+            <label>Optimizer Minimum Step Length</label>
+            <description>Minimum step length for registration optimizer</description>
+            <default>0.001</default>
+            <constraints>
+                <step>0.001</step>
+                <minimum>0.001</minimum>
+                <maximum>0.1</maximum>
+            </constraints>
+        </float>
+        <float>
+            <name>optimizerRelaxFactor</name>
+            <longflag>optimizerRelaxFactor</longflag>
+            <label>Optimizer Relax Factor</label>
+            <description>Relax Factor for registration optimizer</description>
+            <default>0.5</default>
+            <constraints>
+                <step>0.1</step>
+                <minimum>0.1</minimum>
+                <maximum>1</maximum>
+            </constraints>
+        </float>
+        <float>
+            <name>movingTranslationScale</name>
+            <longflag>movingTranslationScale</longflag>
+            <label>Moving Translation Scale</label>
+            <description>Moving Translation Scale for registration optimizer</description>
+            <default>0.001</default>
+            <constraints>
+                <step>0.001</step>
+                <minimum>0.001</minimum>
+                <maximum>1</maximum>
+            </constraints>
+        </float>
+        <integer>
+            <name>optimizerNumIterations</name>
+            <longflag>optimizerNumIterations</longflag>
+            <label>Optimizer Number of Iterations</label>
+            <description>Number of iterations for registration optimizer</description>
+            <default>200</default>
+            <constraints>
+                <step>1</step>
+                <minimum>1</minimum>
+                <maximum>1000</maximum>
+            </constraints>
+        </integer>
+    </parameters>
 </executable>

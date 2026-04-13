@@ -14,12 +14,13 @@
 #include "itkRescaleIntensityImageFilter.h"
 
 const int numDim = 2;
-const float optimizerLearningRate = 4;
+/*
+const float optimizerLearningRate = 8;
 const float optimizerMinimumStepLength = 0.001;
 const float optimizerRelaxFactor = 0.5;
 const float movingTranslationScale = 1.0 / 1000.0;
 const int optimizerNumIterations = 200;
-
+*/
 using InputPixelType = float;
 using AffineTransformPixelType = double;
 using OptimizerValueType = double;
