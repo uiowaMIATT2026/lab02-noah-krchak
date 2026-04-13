@@ -119,6 +119,7 @@ int main(int argc, char *argv[])
 
         ImageType::Pointer img1 = spatialToImageFilter1->GetOutput();
 
+        // Writing img1 to disk
         std::string img1FileName = "img1.png";
         ImageWriterType::Pointer img1Writer = ImageWriterType::New();
 
@@ -142,6 +143,14 @@ int main(int argc, char *argv[])
 
         ImageType::Pointer img2 = spatialToImageFilter1->GetOutput();
 
+        // Writing img2 to disk
+        std::string img2FileName = "img2.png";
+        ImageWriterType::Pointer img2Writer = ImageWriterType::New();
+
+        img2Writer->SetInput(img2);
+        img2Writer->SetFileName(img2FileName.c_str());
+
+        img2Writer->Update();
 
 
     }
