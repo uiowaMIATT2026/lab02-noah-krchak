@@ -5,13 +5,15 @@
 
 
 #include <itkEllipseSpatialObject.h>
+#include <itkSpatialObjectToImageFilter.h>
 #include "itkImage.h"
 #include "itkImageFileWriter.h"
 
 using PixelType = float;
 const int numDim = 2;
 using ImageType = itk::Image<PixelType, numDim>;
-
+using EllipseType = itk::EllipseSpatialObject<numDim>;
+using SpatialToImageFilterType = itk::SpatialObjectToImageFilter<EllipseType, ImageType>;
 int main(int argc, char *argv[])
 {
     ImageType::Pointer img1 = ImageType::New();
@@ -92,6 +94,16 @@ int main(int argc, char *argv[])
     //Set regions for img2 and allocate
     img2->SetRegions(img1Region);
     img2->Allocate();
+
+
+    //Create circle for img1
+    EllipseType::Pointer ellipseImg1 = EllipseType::New();
+    float radiusEllipseImg1 = 15.0; //Set circle radius to be 15.0 mm (diameter for img1 is 30.0)
+    ImageType::PointType centerEllipseImg1{{50.0, 50.0}}; // Center of circle in image 1 is at 50.0 mm, 50.0 mm
+    ellipseImg1->SetRadiusInObjectSpace(radiusEllipseImg1);
+    ellipseImg1->SetCenterInObjectSpace(centerEllipseImg1);
+
+
 
     return EXIT_SUCCESS;
 }
