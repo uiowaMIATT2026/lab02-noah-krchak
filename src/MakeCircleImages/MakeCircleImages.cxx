@@ -118,6 +118,21 @@ int main(int argc, char *argv[])
 
     ImageType::Pointer img1 = spatialToImageFilter1->GetOutput();
 
+    //Create circle for spatialToImageFilter2
+    EllipseType::Pointer ellipse2 = EllipseType::New();
+    float radiusEllipseImg2 = 30.0; //Set circle radius to be 30.0 mm (diameter for img2.png is 60.0 mm)
+    ImageType::PointType centerEllipseImg2{{200.0, 200.0}}; // Center of circle in image 2 is at 200.0 mm, 200.0 mm
+    ellipse2->SetRadiusInObjectSpace(radiusEllipseImg2);
+    ellipse2->SetCenterInObjectSpace(centerEllipseImg2);
+
+    spatialToImageFilter2->SetInput(ellipse2);
+    spatialToImageFilter2->SetInsideValue(1.0);
+    spatialToImageFilter2->SetOutsideValue(0.0);
+
+    spatialToImageFilter2->Update();
+
+    ImageType::Pointer img2 = spatialToImageFilter1->GetOutput();
+
 
 
 
