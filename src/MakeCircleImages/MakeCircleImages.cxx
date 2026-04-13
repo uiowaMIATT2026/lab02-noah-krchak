@@ -16,20 +16,20 @@ using EllipseType = itk::EllipseSpatialObject<numDim>;
 using SpatialToImageFilterType = itk::SpatialObjectToImageFilter<EllipseType, ImageType>;
 int main(int argc, char *argv[])
 {
-    ImageType::Pointer img1 = ImageType::New();
+    SpatialToImageFilterType::Pointer spatialToImageFilter1 = SpatialToImageFilterType ::New();
 
-    //Set spacing for img1
+    //Set spacing for spatialToImageFilter1
     ImageType::SpacingType img1Spacing;
 
     img1Spacing[0] = 1.0; // Spacing along x in mm
     img1Spacing[1] = 1.0; // Spacing along y in mm
 
-    img1->SetSpacing(img1Spacing);
+    spatialToImageFilter1->SetSpacing(img1Spacing);
 
-    //Set origin for img1
+    //Set origin for spatialToImageFilter1
     const ImageType::PointType img1Origin{{0.0, 0.0}}; // x: 0.0 mm, y: 0.0 mm
 
-    img1->SetOrigin(img1Origin);
+    spatialToImageFilter1->SetOrigin(img1Origin);
 
 
     //Set largest region start location
@@ -45,15 +45,12 @@ int main(int argc, char *argv[])
     img1Size[0] = 400; // size along x
     img1Size[1] = 400; // size along y
 
-    //Create largest region for img1
-    ImageType::RegionType img1Region;
 
-    img1Region.SetSize(img1Size);
-    img1Region.SetIndex(img1Start);
 
-    //Set regions for img1 and allocate
-    img1->SetRegions(img1Region);
-    img1->Allocate();
+    spatialToImageFilter1->SetSize(img1Size);
+    spatialToImageFilter1->SetIndex(img1Start);
+
+
 
 
     ImageType::Pointer img2 = ImageType::New();
@@ -92,16 +89,25 @@ int main(int argc, char *argv[])
     img2Region.SetIndex(img2Start);
 
     //Set regions for img2 and allocate
-    img2->SetRegions(img1Region);
+    img2->SetRegions(img2Region);
     img2->Allocate();
 
 
-    //Create circle for img1
-    EllipseType::Pointer ellipseImg1 = EllipseType::New();
-    float radiusEllipseImg1 = 15.0; //Set circle radius to be 15.0 mm (diameter for img1 is 30.0)
+    //Create circle for spatialToImageFilter1
+    EllipseType::Pointer ellipse1 = EllipseType::New();
+    float radiusEllipseImg1 = 15.0; //Set circle radius to be 15.0 mm (diameter for spatialToImageFilter1 is 30.0)
     ImageType::PointType centerEllipseImg1{{50.0, 50.0}}; // Center of circle in image 1 is at 50.0 mm, 50.0 mm
-    ellipseImg1->SetRadiusInObjectSpace(radiusEllipseImg1);
-    ellipseImg1->SetCenterInObjectSpace(centerEllipseImg1);
+    ellipse1->SetRadiusInObjectSpace(radiusEllipseImg1);
+    ellipse1->SetCenterInObjectSpace(centerEllipseImg1);
+
+    spatialToImageFilter1->SetInput(ellipse1);
+    spatialToImageFilter1->SetInsideValue(1.0);
+    spatialToImageFilter1->SetOutsideValue(0.0);
+
+    spatialToImageFilter1->Update();
+
+    ImageType::Pointer img1 = spatialToImageFilter1->GetOutput();
+
 
 
 
