@@ -55,6 +55,18 @@ int main( int argc, char *argv[] )
         FixedImageType::Pointer fixedImage = fixedReader->GetOutput();
         MovingImageType::Pointer movingImage = movingReader->GetOutput();
 
+        auto resampler = ResampleFilterType::New();
+        resampler->SetInput(movingImage);
+
+        //TODO: Resampler needs transform for movingImage (Input)
+
+        resampler->SetSize(fixedImage->GetLargestPossibleRegion().GetSize());
+        resampler->SetOutputOrigin(fixedImage->GetOrigin());
+        resampler->SetOutputSpacing(fixedImage->GetSpacing());
+        resampler->SetOutputDirection(fixedImage->GetDirection());
+        resampler->SetDefaultPixelValue(100);
+
+
 
     }
     catch(itk::ExceptionObject &err)
