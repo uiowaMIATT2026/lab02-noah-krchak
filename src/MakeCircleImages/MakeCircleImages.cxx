@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
 
         spatialToImageFilter2->Update();
 
-        ImageType::Pointer img2 = spatialToImageFilter1->GetOutput();
+        ImageType::Pointer img2 = spatialToImageFilter2->GetOutput();
 
         // Writing img2 to disk
         std::string img2FileName = "img2.png";
