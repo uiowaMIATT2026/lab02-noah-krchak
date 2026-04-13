@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 
     //Set regions for img1 and allocate
     img1->SetRegions(img1Region);
-    img1->Allocate()
+    img1->Allocate();
 
     return EXIT_SUCCESS;
 }
