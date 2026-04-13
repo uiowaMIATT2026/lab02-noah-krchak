@@ -14,6 +14,8 @@ const int numDim = 2;
 using ImageType = itk::Image<PixelType, numDim>;
 using EllipseType = itk::EllipseSpatialObject<numDim>;
 using SpatialToImageFilterType = itk::SpatialObjectToImageFilter<EllipseType, ImageType>;
+
+using ImageWriterType = itk::ImageFileWriter<ImageType>;
 int main(int argc, char *argv[])
 {
     try {
@@ -117,6 +119,14 @@ int main(int argc, char *argv[])
 
         ImageType::Pointer img1 = spatialToImageFilter1->GetOutput();
 
+        std::string img1FileName = "img1.png";
+        ImageWriterType::Pointer img1Writer = ImageWriterType::New();
+
+        img1Writer->SetInput(img1);
+        img1Writer->SetFileName(img1FileName.c_str());
+
+        img1Writer->Update();
+
         //Create circle for spatialToImageFilter2
         EllipseType::Pointer ellipse2 = EllipseType::New();
         float radiusEllipseImg2 = 30.0; //Set circle radius to be 30.0 mm (diameter for img2.png is 60.0 mm)
@@ -131,6 +141,8 @@ int main(int argc, char *argv[])
         spatialToImageFilter2->Update();
 
         ImageType::Pointer img2 = spatialToImageFilter1->GetOutput();
+
+
 
     }
     catch(itk::ExceptionObject &err)
