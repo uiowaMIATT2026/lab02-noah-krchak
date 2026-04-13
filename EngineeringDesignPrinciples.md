@@ -12,6 +12,7 @@
       - CMakeLists.txt
       - Algorithm c++
       - Algorithm 
+      - MakeCircleImages.cpp
     - CMakeLists.txt
     - EngineeringDesignPrinciples.md
     - ExperimentalResults.md
@@ -20,5 +21,11 @@
 # Assumptions on creating 2D images that have one circle in them
 - Spacing is 1.0 mm x 1.0 mm
 - Origin is 0.0 mm x 0.0 mm
-- Image files are in DICOM format
-  - Dicom format saves origin, spacing, and direction cosine of the image
+- Images have exactly one circle in them
+- The circle has these characteristics in img1.png
+  - Center: 50 mm, 50 mm
+  - Diameter: 30 mm
+- The circle has these characteristics in img2.png
+  - Center: 200 mm, 200 mm
+  - Diameter: 60 mm
+- Image files must be saved in png format, as to adhere to the requirements stated in the README, specifically the file extensions of img1 and img2 are both .png
