@@ -9,7 +9,7 @@
 #include "itkImage.h"
 #include "itkImageFileWriter.h"
 
-using PixelType = float;
+using PixelType = unsigned char;
 const int numDim = 2;
 using ImageType = itk::Image<PixelType, numDim>;
 using EllipseType = itk::EllipseSpatialObject<numDim>;
@@ -112,8 +112,8 @@ int main(int argc, char *argv[])
         ellipse1->SetCenterInObjectSpace(centerEllipseImg1);
 
         spatialToImageFilter1->SetInput(ellipse1);
-        spatialToImageFilter1->SetInsideValue(1.0);
-        spatialToImageFilter1->SetOutsideValue(0.0);
+        spatialToImageFilter1->SetInsideValue(255);
+        spatialToImageFilter1->SetOutsideValue(0);
 
         spatialToImageFilter1->Update();
 
@@ -136,8 +136,8 @@ int main(int argc, char *argv[])
         ellipse2->SetCenterInObjectSpace(centerEllipseImg2);
 
         spatialToImageFilter2->SetInput(ellipse2);
-        spatialToImageFilter2->SetInsideValue(1.0);
-        spatialToImageFilter2->SetOutsideValue(0.0);
+        spatialToImageFilter2->SetInsideValue(255);
+        spatialToImageFilter2->SetOutsideValue(0);
 
         spatialToImageFilter2->Update();
 
