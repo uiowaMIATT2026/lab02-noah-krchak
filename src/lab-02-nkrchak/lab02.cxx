@@ -10,6 +10,8 @@
 #include "itkRegularStepGradientDescentOptimizerv4.h"
 #include "itkCompositeTransform.h"
 #include "itkResampleImageFilter.h"
+#include "itkSubtractImageFilter.h"
+#include "itkRescaleIntensityImageFilter.h"
 
 const int numDim = 2;
 using InputPixelType = float;
@@ -36,7 +38,9 @@ using FixedInterpolatorType = itk::LinearInterpolateImageFunction<FixedImageType
 using MovingInterpolatorType = itk::LinearInterpolateImageFunction<MovingImageType, InterpolatorCoordinateValueType>;
 
 using ResampleFilterType = itk::ResampleImageFilter<MovingImageType, FixedImageType>;
-using CasterFilterType = itk::CastImageFilter<FixedImageType, OutputImageType>;
+using DifferenceFilterType = itk::SubtractImageFilter<FixedImageType, FixedImageType, FixedImageType>;
+using RescaleIntensityFilterType = itk::RescaleIntensityImageFilter<FixedImageType, OutputImageType>;
+
 int main( int argc, char *argv[] )
 {
     PARSE_ARGS;
@@ -66,7 +70,22 @@ int main( int argc, char *argv[] )
         resampler->SetOutputDirection(fixedImage->GetDirection());
         resampler->SetDefaultPixelValue(100);
 
+        auto difference = DifferenceFilterType::New();
 
+        difference->SetInput1(fixedImage);
+        difference->SetInput2(resampler->GetOutput());
+
+        auto intensityRescaler = RescaleIntensityFilterType::New();
+
+        intensityRescaler->SetInput(difference->GetOutput());
+        intensityRescaler->SetOutputMinimum(0);
+        intensityRescaler->SetOutputMaximum(255);
+
+        auto writer = ImageWriterType::New();
+
+        writer->SetFileName(outputImageFile);
+        writer->SetInput(intensityRescaler->GetOutput());
+        writer->Update();
 
     }
     catch(itk::ExceptionObject &err)
