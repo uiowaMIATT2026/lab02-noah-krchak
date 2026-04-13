@@ -9,10 +9,13 @@
 - Directory structure is as follows
   - lab02-fullname
     - src
-      - CMakeLists.txt
-      - Algorithm c++
-      - Algorithm 
-      - MakeCircleImages.cpp
+      - lab-02
+        - CMakeLists.txt
+        - Algorithm c++
+        - Algorithm 
+      - MakeCircleImages
+        - CMakeLists.txt
+        - MakeCircleImages.cpp
     - CMakeLists.txt
     - EngineeringDesignPrinciples.md
     - ExperimentalResults.md
