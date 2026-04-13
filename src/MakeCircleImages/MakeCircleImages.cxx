@@ -32,6 +32,13 @@ int main(int argc, char *argv[])
     spatialToImageFilter1->SetOrigin(img1Origin);
 
 
+    //Set direction for spatialToImageFilter2
+
+    ImageType::DirectionType img1Direction;
+    img1Direction.SetIdentity();
+
+    spatialToImageFilter1->SetDirection(img1Direction);
+
     //Set largest region start location
     ImageType::IndexType img1Start;
 
