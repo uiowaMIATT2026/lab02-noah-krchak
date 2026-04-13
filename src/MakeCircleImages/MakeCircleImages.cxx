@@ -5,6 +5,7 @@
 
 
 #include <itkEllipseSpatialObject.h>
+#include "itkImage.h"
 #include "itkImageFileWriter.h"
 
 int main(int argc, char *argv[])
