@@ -35,6 +35,8 @@ using RegistrationType = itk::ImageRegistrationMethodv4<FixedImageType, MovingIm
 using FixedInterpolatorType = itk::LinearInterpolateImageFunction<FixedImageType, InterpolatorCoordinateValueType>;
 using MovingInterpolatorType = itk::LinearInterpolateImageFunction<MovingImageType, InterpolatorCoordinateValueType>;
 
+using ResampleFilterType = itk::ResampleImageFilter<MovingImageType, FixedImageType>;
+using CasterFilterType = itk::CastImageFilter<FixedImageType, OutputImageType>;
 int main( int argc, char *argv[] )
 {
     PARSE_ARGS;
@@ -52,6 +54,8 @@ int main( int argc, char *argv[] )
 
         FixedImageType::Pointer fixedImage = fixedReader->GetOutput();
         MovingImageType::Pointer movingImage = movingReader->GetOutput();
+
+
     }
     catch(itk::ExceptionObject &err)
     {
