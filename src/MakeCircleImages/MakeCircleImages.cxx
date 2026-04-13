@@ -53,20 +53,20 @@ int main(int argc, char *argv[])
 
 
 
-    ImageType::Pointer img2 = ImageType::New();
+    SpatialToImageFilterType ::Pointer spatialToImageFilter2 = SpatialToImageFilterType ::New();
 
-    //Set spacing for img2
+    //Set spacing for spatialToImageFilter2
     ImageType::SpacingType img2Spacing;
 
     img2Spacing[0] = 1.0; // Spacing along x in mm
     img2Spacing[1] = 1.0; // Spacing along y in mm
 
-    img2->SetSpacing(img1Spacing);
+    spatialToImageFilter2->SetSpacing(img1Spacing);
 
-    //Set origin for img2
+    //Set origin for spatialToImageFilter2
     const ImageType::PointType img2Origin{{0.0, 0.0}}; // x: 0.0 mm, y: 0.0 mm
 
-    img2->SetOrigin(img2Origin);
+    spatialToImageFilter2->SetOrigin(img2Origin);
 
 
     //Set largest region start location
@@ -82,15 +82,11 @@ int main(int argc, char *argv[])
     img2Size[0] = 400; // Size along x
     img2Size[1] = 400; // Size along y
 
-    //Create largest region for img2
-    ImageType::RegionType img2Region;
+    //Create largest region for spatialToImageFilter2
 
-    img2Region.SetSize(img2Size);
-    img2Region.SetIndex(img2Start);
+    spatialToImageFilter2->SetSize(img2Size);
+    spatialToImageFilter2->SetIndex(img2Start);
 
-    //Set regions for img2 and allocate
-    img2->SetRegions(img2Region);
-    img2->Allocate();
 
 
     //Create circle for spatialToImageFilter1
