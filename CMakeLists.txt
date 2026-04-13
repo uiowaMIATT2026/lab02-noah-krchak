@@ -19,7 +19,7 @@ if(NOT CMAKE_CXX_STANDARD IN_LIST VALID_CXX_STANDARDS )
 endif()
 #-----------------------------------------------------------------------------
 
-project(HW05
+project(lab02-nkrchak
         VERSION 0.0.2026
         LANGUAGES CXX)
 
