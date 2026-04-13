@@ -30,6 +30,28 @@ int main(int argc, char *argv[])
     img1->SetOrigin(img1Origin);
 
 
+    //Set largest region start location
+    ImageType::IndexType img1Start;
+
+    img1Start[0] = 0;
+    img1Start[1] = 0;
+
+    //Set largest region size (aka image size)
+
+    ImageType::SizeType img1Size;
+
+    img1Size[0] = 400;
+    img1Size[1] = 400;
+
+    //Create largest region for img1
+    ImageType::RegionType img1Region;
+
+    img1Region.SetSize(img1Size);
+    img1Region.SetIndex(img1Start);
+
+    //Set regions for img1 and allocate
+    img1->SetRegions(img1Region);
+    img1->Allocate()
 
     return EXIT_SUCCESS;
 }
