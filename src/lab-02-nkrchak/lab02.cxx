@@ -99,9 +99,18 @@ int main( int argc, char *argv[] )
 
         optimizer->SetScales(optimizerScales);
 
+        auto identityTransform = AffineTransformType::New();
+
+        identityTransform->SetIdentity();
+
+        registration->SetFixedInitialTransform(identityTransform);
+        registration->SetMovingInitialTransform(identityTransform);
         registration->Update();
 
         auto outputCompositeTransform = CompositeTransformType::New();
+
+        outputCompositeTransform->AddTransform(identityTransform);
+        outputCompositeTransform->AddTransform(registration->GetModifiableTransform());
 
         auto resampler = ResampleFilterType::New();
         resampler->SetInput(movingImage);
@@ -112,7 +121,7 @@ int main( int argc, char *argv[] )
         resampler->SetOutputOrigin(fixedImage->GetOrigin());
         resampler->SetOutputSpacing(fixedImage->GetSpacing());
         resampler->SetOutputDirection(fixedImage->GetDirection());
-        resampler->SetTransform(registration->GetModifiableTransform());
+        resampler->SetTransform(outputCompositeTransform);
         resampler->SetDefaultPixelValue(100);
 
         auto difference = DifferenceFilterType::New();
