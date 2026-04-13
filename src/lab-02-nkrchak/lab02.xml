@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<executable>
+    <category>Registration</category>
+    <title>Circle Registration Program (MIATT)</title>
+    <description>Register two images that contain exactly one circle </description>
+    <documentation-url></documentation-url>
+    <license></license>
+    <contributor>Noah Krchak </contributor>
+    <version>1.0.0</version>
+
+    <parameters advanced="false">
+        <label>Input Images</label>
+        <image>
+            <name>fixedImageFile</name>
+            <longflag>fixedImageFile</longflag>
+            <label>Fixed Input Image Volume</label>
+            <description>Path to the fixed input image. Must be a 2-dimensional image </description>
+            <channel>input</channel>
+            <default></default>
+        </image>
+        <image>
+            <name>movingImageFile</name>
+            <longflag>movingImageFile</longflag>
+            <label>Moving Input Image Volume</label>
+            <description>Path to the moving input image. Must be a 2-dimensional image</description>
+            <default></default>
+            <channel>input</channel>
+        </image>
+    </parameters>
+</executable>
