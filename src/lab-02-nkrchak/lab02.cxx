@@ -38,5 +38,15 @@ using MovingInterpolatorType = itk::LinearInterpolateImageFunction<MovingImageTy
 int main( int argc, char *argv[] )
 {
     PARSE_ARGS;
+
+    try{
+
+    }
+    catch(itk::ExceptionObject &err)
+    {
+        std::cerr << "ExceptionObject caught !" << std::endl;
+        std::cerr << err << std::endl;
+        return EXIT_FAILURE;
+    }
     return EXIT_SUCCESS;
 }
