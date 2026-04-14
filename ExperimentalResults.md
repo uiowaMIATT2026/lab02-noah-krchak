@@ -16,3 +16,12 @@ meaning that it scales the moving image uniformly, never causing the image to sh
 the moving image to always remain a circle even when resized.
 
 This achieved better results with the moving image circle mostly overlapping the fixed image circle.
+
+# Conclusions
+
+Although I have run out of time to fully test all of the optimization parameters, I was able
+to determine that Similarity2DTransform is better than affine transform in 2d for this particular problem.
+I was only able to test a few learning rates and was only able to judge the registration visually via the 
+the output difference image. If I did have more time, I would also quantitatively prove that my registration
+method is the best method for this particular problem and would test more of the optimization parameters
+to determine which of them have the biggest impact on the registration output.
