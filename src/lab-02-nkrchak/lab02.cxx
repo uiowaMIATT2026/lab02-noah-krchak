@@ -14,13 +14,13 @@
 #include "itkRescaleIntensityImageFilter.h"
 
 const int numDim = 2;
-/*
+
 const float optimizerLearningRate = 8;
 const float optimizerMinimumStepLength = 0.001;
 const float optimizerRelaxFactor = 0.5;
 const float movingTranslationScale = 1.0 / 1000.0;
 const int optimizerNumIterations = 200;
-*/
+
 using InputPixelType = float;
 using AffineTransformPixelType = double;
 using OptimizerValueType = double;
@@ -54,6 +54,14 @@ int main( int argc, char *argv[] )
 {
     PARSE_ARGS;
 
+    /*
+    const float constOptimizerLearningRate = optimizerLearningRate;
+    const float constOptimizerMinimumStepLength = optimizerMinimumStepLength;
+    const float constOptimizerRelaxFactor = optimizerRelaxFactor;
+    const float constMovingTranslationScale = movingTranslationScale;
+
+    const int constOptimizerNumIterations = optimizerNumIterations;
+    */
     try{
         //Read in both the fixed image and the moving image
         typename FixedImageReaderType::Pointer fixedReader = FixedImageReaderType::New();

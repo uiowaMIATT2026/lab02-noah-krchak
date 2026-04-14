@@ -36,7 +36,8 @@
         </image>
     </parameters>
 
-    <parameters advanced="false">
+    <!--
+    <parameters>
         <label>Developer Parameters</label>
         <float>
             <name>optimizerLearningRate</name>
@@ -99,4 +100,5 @@
             </constraints>
         </integer>
     </parameters>
+    -->
 </executable>
