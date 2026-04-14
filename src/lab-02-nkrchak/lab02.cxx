@@ -54,14 +54,6 @@ int main( int argc, char *argv[] )
 {
     PARSE_ARGS;
 
-    /*
-    const float constOptimizerLearningRate = optimizerLearningRate;
-    const float constOptimizerMinimumStepLength = optimizerMinimumStepLength;
-    const float constOptimizerRelaxFactor = optimizerRelaxFactor;
-    const float constMovingTranslationScale = movingTranslationScale;
-
-    const int constOptimizerNumIterations = optimizerNumIterations;
-    */
     try{
         //Read in both the fixed image and the moving image
         typename FixedImageReaderType::Pointer fixedReader = FixedImageReaderType::New();
@@ -130,7 +122,6 @@ int main( int argc, char *argv[] )
         resampler->SetOutputSpacing(fixedImage->GetSpacing());
         resampler->SetOutputDirection(fixedImage->GetDirection());
         resampler->SetTransform(outputCompositeTransform);
-        //resampler->SetTransform(registration->GetTransform());
         resampler->SetDefaultPixelValue(100);
 
         auto difference = DifferenceFilterType::New();
