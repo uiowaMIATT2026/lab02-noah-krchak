@@ -5,7 +5,7 @@
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
 #include "itkImageRegistrationMethodv4.h"
-#include "itkAffineTransform.h"
+#include "itkSimilarity2DTransform.h"
 #include "itkMeanSquaresImageToImageMetricv4.h"
 #include "itkRegularStepGradientDescentOptimizerv4.h"
 #include "itkCompositeTransform.h"
@@ -15,14 +15,14 @@
 
 const int numDim = 2;
 
-const float optimizerLearningRate = 8;
+const float optimizerLearningRate = 0.5;
 const float optimizerMinimumStepLength = 0.001;
 const float optimizerRelaxFactor = 0.5;
 const float movingTranslationScale = 1.0 / 1000.0;
 const int optimizerNumIterations = 200;
 
 using InputPixelType = float;
-using AffineTransformPixelType = double;
+using SimilarityPixelType = double;
 using OptimizerValueType = double;
 using InterpolatorCoordinateValueType = double;
 using CompositeTransformPixelType = double;
@@ -37,10 +37,10 @@ using FixedImageReaderType = itk::ImageFileReader<FixedImageType>;
 using MovingImageReaderType = itk::ImageFileReader<MovingImageType>;
 using ImageWriterType = itk::ImageFileWriter<OutputImageType>;
 
-using AffineTransformType = itk::AffineTransform<AffineTransformPixelType, numDim>;
+using SimilarityTransformType = itk::Similarity2DTransform<SimilarityPixelType >;
 using OptimizerType = itk::RegularStepGradientDescentOptimizerv4<OptimizerValueType>;
 using MetricType = itk::MeanSquaresImageToImageMetricv4<FixedImageType, MovingImageType>;
-using RegistrationType = itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType, AffineTransformType>;
+using RegistrationType = itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType, SimilarityTransformType >;
 
 using FixedInterpolatorType = itk::LinearInterpolateImageFunction<FixedImageType, InterpolatorCoordinateValueType>;
 using MovingInterpolatorType = itk::LinearInterpolateImageFunction<MovingImageType, InterpolatorCoordinateValueType>;
@@ -98,17 +98,16 @@ int main( int argc, char *argv[] )
 
         optimizer->SetNumberOfIterations(optimizerNumIterations);
 
-        auto transform = AffineTransformType::New();
+        auto transform = SimilarityTransformType ::New();
         OptimizerType::ScalesType optimizerScales(transform->GetNumberOfParameters());
 
         optimizerScales.Fill(1.0);
-
-        for(int i = 9; i< 12; i++)
-            optimizerScales[i] = movingTranslationScale;
+        optimizerScales[2] = movingTranslationScale; //X component translation scale
+        optimizerScales[3] = movingTranslationScale; //Y component translation scale
 
         optimizer->SetScales(optimizerScales);
 
-        auto identityTransform = AffineTransformType::New();
+        auto identityTransform = SimilarityTransformType::New();
 
         identityTransform->SetIdentity();
 
@@ -131,6 +130,7 @@ int main( int argc, char *argv[] )
         resampler->SetOutputSpacing(fixedImage->GetSpacing());
         resampler->SetOutputDirection(fixedImage->GetDirection());
         resampler->SetTransform(outputCompositeTransform);
+        //resampler->SetTransform(registration->GetTransform());
         resampler->SetDefaultPixelValue(100);
 
         auto difference = DifferenceFilterType::New();
